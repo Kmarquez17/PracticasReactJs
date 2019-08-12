@@ -1,0 +1,34 @@
+{
+  "restaurant": [
+    {
+      "id": 1,
+      "precioPlatillo": "200",
+      "nombrePlatillo": "Cheeseacake",
+      "categoria": "postres"
+    },
+    {
+      "id": 2,
+      "precioPlatillo": "350",
+      "nombrePlatillo": "Rib Eye 400g",
+      "categoria": "cortes"
+    },
+    {
+      "nombrePlatillo": "Quesadilla",
+      "precioPlatillo": "180",
+      "categoria": "Postre",
+      "id": 3
+    },
+    {
+      "nombrePlatillo": "Pastel Chocolate",
+      "precioPlatillo": "750",
+      "categoria": "Postre",
+      "id": 4
+    },
+    {
+      "nombrePlatillo": "E3",
+      "precioPlatillo": "120",
+      "categoria": "Postre",
+      "id": 5
+    }
+  ]
+}
