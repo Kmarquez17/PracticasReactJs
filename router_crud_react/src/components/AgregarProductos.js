@@ -52,8 +52,7 @@ const AgregarProductos = ({ history, setRecargar }) => {
         nombrePlatillo,
         precioPlatillo,
         categoria
-      });
-      console.log(resultado);
+      });     
 
       if (resultado.status === 201) {
         Swal.fire(
@@ -63,6 +62,7 @@ const AgregarProductos = ({ history, setRecargar }) => {
         );
       }
     } catch (error) {
+      console.log(error);
       Swal.fire({
         type: "error",
         title: "Error",

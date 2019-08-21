@@ -34,7 +34,6 @@ function App() {
 
   useEffect(() => {
     console.log(1);
-    debugger;
     //Hacemos una copia para saber si la busqueda cambio y inicializar nuestra pagina
     if (traerBusqueda !== copiaBusqueda) {
       setPaginActual(1);

@@ -1,21 +1,15 @@
 {
   "restaurant": [
     {
-      "id": 1,
-      "precioPlatillo": "200",
-      "nombrePlatillo": "Cheeseacake",
-      "categoria": "postres"
-    },
-    {
-      "id": 2,
-      "precioPlatillo": "350",
       "nombrePlatillo": "Rib Eye 400g",
-      "categoria": "cortes"
+      "precioPlatillo": "350",
+      "categoria": "Cortes",
+      "id": 2
     },
     {
-      "nombrePlatillo": "Quesadilla",
-      "precioPlatillo": "180",
-      "categoria": "Postre",
+      "nombrePlatillo": "Ron",
+      "precioPlatillo": "480",
+      "categoria": "Bebidas",
       "id": 3
     },
     {
@@ -25,7 +19,7 @@
       "id": 4
     },
     {
-      "nombrePlatillo": "E3",
+      "nombrePlatillo": "Cajetas",
       "precioPlatillo": "120",
       "categoria": "Postre",
       "id": 5

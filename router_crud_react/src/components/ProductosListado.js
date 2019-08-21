@@ -1,11 +1,41 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import Swal from "sweetalert2";
 
-const ProductosListado = ({ producto }) => {
+const ProductosListado = ({ producto, setRecargar }) => {
+  const eliminarProducto = id => {
+    console.log(id);
 
-  const eliminarProducto = (id) => {
-      console.log(id);      
-  }
+    Swal.fire({
+      title: "¿Estas Seguro?",
+      text: "Un platillo elimando no se puede recuperar!",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si,Eliminar!",
+      cancelButtonText: "Cancelar"
+    }).then(async result => {
+      if (result.value) {
+        try {
+          const URL = `http://localhost:4000/restaurant/${id}`;
+          const resultado = await axios.delete(URL);
+          if (resultado.status === 200) {
+            setRecargar(true);
+            Swal.fire("Eliminado!", "El producto se ha eliminado", "success");
+          }
+        } catch (error) {
+          console.log(error);
+          Swal.fire({
+            type: "error",
+            title: "Error",
+            text: "Hubo un error, vuelve a intentar"
+          });
+        }
+      }
+    });
+  };
 
   return (
     <li
