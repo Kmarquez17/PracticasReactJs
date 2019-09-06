@@ -93,6 +93,96 @@ module.exports =
 /************************************************************************/
 /******/ ({
 
+/***/ "./components/Eventos.js":
+/*!*******************************!*\
+  !*** ./components/Eventos.js ***!
+  \*******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+var _jsxFileName = "C:\\Users\\KMARQUEZ\\Desktop\\Cursos_Practicas\\Curso_React_udemy\\bitcoinapp\\components\\Eventos.js";
+
+var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
+
+const Evento = ({
+  evento
+}) => {
+  const {
+    name,
+    url,
+    description
+  } = evento;
+  let titulo = name.text;
+  let desc = description.text;
+
+  if (titulo.length > 150) {
+    titulo = titulo.substr(0, 100) + " ...";
+  }
+
+  if (desc) {
+    desc = desc.substr(0, 100) + " ...";
+  }
+
+  return __jsx("a", {
+    href: url,
+    className: "list-group-item activate text-light mb-4",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 15
+    },
+    __self: undefined
+  }, __jsx("h3", {
+    className: "mb-3",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 16
+    },
+    __self: undefined
+  }, titulo), __jsx("p", {
+    className: "mb-1",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 17
+    },
+    __self: undefined
+  }, desc));
+};
+
+const Eventos = ({
+  eventos
+}) => {
+  //   const eventosId = Object.keys(eventos);
+  let max = 21;
+  return __jsx("div", {
+    className: "list-group",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 26
+    },
+    __self: undefined
+  }, eventos.map((evento, key) => {
+    if (key < max) {
+      return __jsx(Evento, {
+        key: key,
+        evento: evento,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 30
+        },
+        __self: undefined
+      });
+    }
+  }));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Eventos);
+
+/***/ }),
+
 /***/ "./components/Master.js":
 /*!******************************!*\
   !*** ./components/Master.js ***!
@@ -1212,6 +1302,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Master__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Master */ "./components/Master.js");
 /* harmony import */ var _components_Precio__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/Precio */ "./components/Precio.js");
 /* harmony import */ var _components_Noticias__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/Noticias */ "./components/Noticias.js");
+/* harmony import */ var _components_Eventos__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/Eventos */ "./components/Eventos.js");
 var _jsxFileName = "C:\\Users\\KMARQUEZ\\Desktop\\Cursos_Practicas\\Curso_React_udemy\\bitcoinapp\\pages\\index.js";
 
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
@@ -1220,57 +1311,59 @@ var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
 
 
 
+
 const Index = props => __jsx(_components_Master__WEBPACK_IMPORTED_MODULE_2__["default"], {
-  __source: {
-    fileName: _jsxFileName,
-    lineNumber: 8
-  },
-  __self: undefined
-}, __jsx("div", {
-  className: "row",
   __source: {
     fileName: _jsxFileName,
     lineNumber: 9
   },
   __self: undefined
 }, __jsx("div", {
-  className: "col-12",
+  className: "row",
   __source: {
     fileName: _jsxFileName,
     lineNumber: 10
   },
   __self: undefined
-}, __jsx("h2", {
+}, __jsx("div", {
+  className: "col-12",
   __source: {
     fileName: _jsxFileName,
     lineNumber: 11
+  },
+  __self: undefined
+}, __jsx("h2", {
+  __source: {
+    fileName: _jsxFileName,
+    lineNumber: 12
   },
   __self: undefined
 }, "Precio Bitcoin"), __jsx(_components_Precio__WEBPACK_IMPORTED_MODULE_3__["default"], {
   precio: props.precio,
   __source: {
     fileName: _jsxFileName,
-    lineNumber: 12
+    lineNumber: 13
   },
   __self: undefined
 })), __jsx("div", {
   className: "col-md-8",
   __source: {
     fileName: _jsxFileName,
-    lineNumber: 14
+    lineNumber: 15
   },
   __self: undefined
 }, __jsx("h2", {
+  className: "my-4",
   __source: {
     fileName: _jsxFileName,
-    lineNumber: 15
+    lineNumber: 16
   },
   __self: undefined
 }, "Noticias sobre Bitcoin"), __jsx(_components_Noticias__WEBPACK_IMPORTED_MODULE_4__["default"], {
   noticias: props.noticias,
   __source: {
     fileName: _jsxFileName,
-    lineNumber: 16
+    lineNumber: 17
   },
   __self: undefined
 })), __jsx("div", {
@@ -1281,21 +1374,32 @@ const Index = props => __jsx(_components_Master__WEBPACK_IMPORTED_MODULE_2__["de
   },
   __self: undefined
 }, __jsx("h2", {
+  className: "my-4",
   __source: {
     fileName: _jsxFileName,
     lineNumber: 20
   },
   __self: undefined
-}, "Pr\xF3ximos eventos de Bitcoin"))));
+}, "Pr\xF3ximos eventos de Bitcoin"), __jsx(_components_Eventos__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  eventos: props.eventos,
+  __source: {
+    fileName: _jsxFileName,
+    lineNumber: 21
+  },
+  __self: undefined
+}))));
 
 Index.getInitialProps = async () => {
   const precio = await isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_1___default()(`https://api.coinmarketcap.com/v2/ticker/1/`);
-  const noticias = await isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_1___default()(`https://newsapi.org/v2/everything?q=bitcoin&from=2019-08-03&sortBy=publishedAt&apiKey=4a7109eb2bc54b6a89cd9557a2803d7b&language=es`);
+  const noticias = await isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_1___default()(`https://newsapi.org/v2/everything?q=bitcoin&from=2019-08-04&sortBy=publishedAt&apiKey=4a7109eb2bc54b6a89cd9557a2803d7b&language=es`);
+  const eventos = await isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_1___default()(`https://www.eventbriteapi.com/v3/events/search/?q=Bitcoin&sort_by=date&location.address=Mexico&token=RGAKKCAHJFXC35MBBUKP`);
   const resPrecio = await precio.json();
   const resNoticias = await noticias.json();
+  const resEventos = await eventos.json();
   return {
     precio: resPrecio.data.quotes.USD,
-    noticias: resNoticias.articles
+    noticias: resNoticias.articles,
+    eventos: resEventos.events
   };
 };
 
