@@ -7,7 +7,13 @@ import {
   LISTADO_PRODUCTOS_ERROR,
   OBTENER_PRODUCTO_ELIMINAR,
   PRODUCTO_ELIMINADO_EXITOSO,
-  PRODUCTO_ELIMINADO_ERROR
+  PRODUCTO_ELIMINADO_ERROR,
+  OBTENER_PRODUCTO_EDITAR,
+  PRODUCTO_EDITAR_EXITOSO,
+  PRODUCTO_EDITAR_ERROR,
+  COMENZAR_EDITAR_PRODUCTO,
+  PRODUCTO_EDITADO_EXITOSO,
+  PRODUCTO_EDITADO_ERROR
 } from "../types";
 
 import clienteAxios from "../config/Axios";
@@ -74,8 +80,8 @@ export const listadoProductosError = () => {
 };
 
 /** Eliminando productos*/
-
-export function EliminarProductoActions(id) {
+export function eliminarProductoActions(id) {
+  debugger
   return dispatch => {
     dispatch(obtenerProductoEliminar());
     clienteAxios
@@ -101,5 +107,67 @@ export const productoEliminadoExitoso = id => {
 export const productoEliminadoError = () => {
   return {
     type: PRODUCTO_ELIMINADO_ERROR
+  };
+};
+
+/*Obtener Producto a editar*/
+export function obtenerProductoEditarActions(id) {
+  return dispatch => {
+    dispatch(obtenerProductoEditar());
+    //Obtener producto de la API
+    clienteAxios
+      .get(`/libros/${id}`)
+      .then(resp => dispatch(productoEditarExitoso(resp.data)))
+      .catch(error => dispatch(productoEditarError()));
+  };
+}
+
+export const obtenerProductoEditar = () => {
+  return {
+    type: OBTENER_PRODUCTO_EDITAR
+  };
+};
+
+export const productoEditarExitoso = producto => {
+  return {
+    type: PRODUCTO_EDITAR_EXITOSO,
+    payload: producto
+  };
+};
+
+export const productoEditarError = () => {
+  return {
+    type: PRODUCTO_EDITAR_ERROR
+  };
+};
+
+/*Editar el producto */
+
+export function editarProductoActios(producto) {
+  return dispatch => {
+    dispatch(editadoProductoComienzo());
+    clienteAxios
+      .put(`/libros/${producto.id}`, producto)
+      .then(resp => dispatch(editadoProductoExitoso(resp.data)))
+      .catch(error => dispatch(editadoProductoError()));
+  };
+}
+
+export const editadoProductoComienzo = () => {
+  return {
+    type: COMENZAR_EDITAR_PRODUCTO
+  };
+};
+
+export const editadoProductoExitoso = producto => {
+  return {
+    type: PRODUCTO_EDITADO_EXITOSO,
+    payload: producto
+  };
+};
+
+export const editadoProductoError = () => {
+  return {
+    type: PRODUCTO_EDITADO_ERROR
   };
 };

@@ -17,7 +17,8 @@ const NuevoProducto = ({ history }) => {
   //Dispatch
   const dispatch = useDispatch();
 
-  const agregarProducto = producto => dispatch(agregarProductoActions(producto));
+  const agregarProducto = producto =>
+    dispatch(agregarProductoActions(producto));
   const validarFormulario = () => dispatch(validarFormularioActions());
   const exitoValidacion = () => dispatch(validacionExitoActions());
   const errorValidacion = () => dispatch(validacionErrorActions());
@@ -42,13 +43,13 @@ const NuevoProducto = ({ history }) => {
 
     exitoValidacion();
 
-    //crear el nuevo producto
+    //Crear el nuevo producto
     agregarProducto({
       nombre,
       precio
     });
 
-    //redireccionar
+    //Redireccionar
     history.push("/");
   };
 

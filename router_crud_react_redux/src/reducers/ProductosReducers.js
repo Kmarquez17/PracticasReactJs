@@ -7,19 +7,26 @@ import {
   LISTADO_PRODUCTOS_ERROR,
   OBTENER_PRODUCTO_ELIMINAR,
   PRODUCTO_ELIMINADO_EXITOSO,
-  PRODUCTO_ELIMINADO_ERROR
+  PRODUCTO_ELIMINADO_ERROR,
+  OBTENER_PRODUCTO_EDITAR,
+  PRODUCTO_EDITAR_EXITOSO,
+  PRODUCTO_EDITAR_ERROR,
+  COMENZAR_EDITAR_PRODUCTO,
+  PRODUCTO_EDITADO_EXITOSO,
+  PRODUCTO_EDITADO_ERROR
 } from "../types";
 
 //Cada reducers tiene su State
 const initialState = {
   productos: [],
   error: null,
-  loading: false
+  loading: false,
+  producto: {}
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case AGREGAR_PRODUCTO:
+    case AGREGAR_PRODUCTO /** */:
       return {
         ...state,
         error: null
@@ -41,7 +48,8 @@ export default function(state = initialState, action) {
     case COMENZAR_LISTADO_PRODUCTOS:
       return {
         ...state,
-        loading: true
+        loading: true,
+        producto: {}
       };
     case LISTADO_PRODUCTOS_EXITOSA:
       return {
@@ -58,7 +66,7 @@ export default function(state = initialState, action) {
         error: true
       };
 
-    case OBTENER_PRODUCTO_ELIMINAR:
+    case OBTENER_PRODUCTO_ELIMINAR /** */:
       return {
         ...state,
         error: null
@@ -77,6 +85,49 @@ export default function(state = initialState, action) {
         error: true
       };
 
+    case OBTENER_PRODUCTO_EDITAR /** */:
+      return {
+        ...state,
+        error: null
+      };
+
+    case PRODUCTO_EDITAR_EXITOSO:
+      return {
+        ...state,
+        error: null,
+        producto: action.payload
+      };
+
+    case PRODUCTO_EDITAR_ERROR:
+      return {
+        ...state,
+        error: true
+      };
+
+    case COMENZAR_EDITAR_PRODUCTO /** */:
+      return {
+        ...state,
+        error: null
+      };
+
+    case PRODUCTO_EDITADO_EXITOSO:
+      return {
+        ...state,
+        error: null,
+        productos: state.productos.map(
+          //Iteramos los productos
+          producto =>
+            producto.id === action.payload.id // buscamos por ID el producto,
+              ? (producto = action.payload) // si el ID se encuentra se re-escribe en el estado
+              : producto // si el ID no se encuentra no se modificanada
+        )
+      };
+
+    case PRODUCTO_EDITADO_ERROR:
+      return {
+        ...state,
+        error: true
+      };
     default:
       return state;
   }

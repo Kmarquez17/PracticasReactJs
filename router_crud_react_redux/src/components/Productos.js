@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import {
   listadoProductosActions,
-  EliminarProductoActions
+  eliminarProductoActions
 } from "../actions/ProductosActions";
 import { Link } from "react-router-dom";
 
@@ -27,6 +27,7 @@ const Productos = () => {
 
   //Funcion Eliminar producto
   const EliminarProducto = id => {
+    debugger
     //Preguntar al usuario
     Swal.fire({
       title: "¿Estás seguro?",
@@ -39,7 +40,7 @@ const Productos = () => {
       cancelButtonText: "Cancelar"
     }).then(result => {
       if (result.value) {
-        dispatch(EliminarProductoActions(id));
+        dispatch(eliminarProductoActions(id));
         Swal.fire(
           "Eliminado!",
           "El producto se elimino correctamente",
@@ -74,7 +75,7 @@ const Productos = () => {
                 {/* <th scope="row">{producto.id}</th> */}
                 <td>{producto.nombre}</td>
                 <td>
-                  <span>{producto.precio}</span>
+                  <span className='font-weight-bold'>${producto.precio}</span>
                 </td>
                 <td className="acciones">
                   <Link

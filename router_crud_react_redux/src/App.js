@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { HashRouter, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 
 import Store from "./Store";
@@ -12,7 +12,7 @@ import EditarProducto from "./components/EditarProducto";
 
 function App() {
   return (
-    <Router>
+    <HashRouter>
       <Provider store={Store}>
         <Header />
         <div className="container">
@@ -21,13 +21,13 @@ function App() {
             <Route exact path="/productos/nuevo" component={NuevoProducto} />
             <Route
               exact
-              path="/productos/editar/:id"
+              path="/producto/editar/:id"
               component={EditarProducto}
             />
           </Switch>
         </div>
       </Provider>
-    </Router>
+    </HashRouter>
   );
 }
 

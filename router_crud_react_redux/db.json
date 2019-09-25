@@ -1,14 +1,14 @@
 {
   "libros": [
     {
-      "nombre": "Aprende React Js ",
-      "precio": "10",
-      "id": 1
+      "id": 1,
+      "nombre": "Aprende React Js",
+      "precio": "19"
     },
     {
+      "id": 2,
       "nombre": "Aprende Javascript desde cero",
-      "precio": "5.5",
-      "id": 2
+      "precio": "5.6"
     },
     {
       "nombre": "Aprende el lenguaje Golang",
