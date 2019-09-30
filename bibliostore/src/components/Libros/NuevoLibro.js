@@ -2,27 +2,26 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { firestoreConnect } from "react-redux-firebase";
 import PropTypes from "prop-types";
-class NuevoSuscriptor extends Component {
-  state = {
-    nombre: "",
-    apellido: "",
-    carrera: "",
-    codigo: ""
-  };
 
+class NuevoLibro extends Component {
+  state = {
+    titulo: "",
+    ISBN: "",
+    editorial: "",
+    existencia: "",
+    prestados:[]
+  };
   /**Funcion para capturar los valores del formulario y asignarlo al state */
-  handleChange = e => {
+  handleChage = e => {
     this.setState({
       [e.target.name]: e.target.value
     });
   };
 
-  /**Funcion para guardar un suscriptor */
-  handleAgregar = e => {
+  handleAgregarLibro = e => {
     e.preventDefault();
-
     //extraer los valores del state
-    const nuevoSuscriptor = this.state;
+    const nuevoLibro = this.state;
 
     //extraer firestore de los props
     const { firestore, history } = this.props;
@@ -31,86 +30,87 @@ class NuevoSuscriptor extends Component {
     firestore
       .add(
         {
-          collection: "suscriptores"
+          collection: "libros"
         },
-        nuevoSuscriptor
+        nuevoLibro
       )
       .then(() => {
-        history.push("/suscriptores");
+        history.push("/");
       });
   };
-
   render() {
     return (
       <div className="row">
         <div className="col-12 mb-4">
-          <Link to={"/suscriptores"} className="btn btn-secondary ">
+          <Link to="/" className="btn btn-secondary">
             <i className="fas fa-arrow-circle-left mr-1"></i>
             Volver al listado
           </Link>
         </div>
         <div className="col-12">
           <h3>
-            <i className="fa fas-user-plus mr-1"></i>
-            Nuevo Suscriptor
+            <i className="fas-fa-book"></i>
+            Nuevo Libro
           </h3>
+
           <div className="row justify-content-center">
             <div className="col-md-8 mt-5">
-              <form onSubmit={this.handleAgregar}>
+              <form onSubmit={this.handleAgregarLibro}>
                 <div className="form-group">
-                  <label>Nombre:</label>
+                  <label>Titulo:</label>
                   <input
                     type="text"
                     className="form-control"
-                    name="nombre"
-                    placeholder="Nombre del suscriptor"
+                    name="titulo"
+                    placeholder="Titulo del libro"
                     required
-                    onChange={this.handleChange}
-                    value={this.state.nombre}
+                    value={this.state.titulo}
+                    onChange={this.handleChage}
                   />
                 </div>
 
                 <div className="form-group">
-                  <label>Apellido:</label>
+                  <label>ISBN: </label>
                   <input
                     type="text"
                     className="form-control"
-                    name="apellido"
-                    placeholder="Apellido del suscriptor"
+                    name="ISBN"
+                    placeholder="ISBN del libro"
                     required
-                    onChange={this.handleChange}
-                    value={this.state.apellido}
+                    value={this.state.ISBN}
+                    onChange={this.handleChage}
                   />
                 </div>
 
                 <div className="form-group">
-                  <label>Carrera:</label>
+                  <label>Editorial: </label>
                   <input
                     type="text"
                     className="form-control"
-                    name="carrera"
-                    placeholder="Carrera del suscriptor"
+                    name="editorial"
+                    placeholder="Editorial del libro"
                     required
-                    onChange={this.handleChange}
-                    value={this.state.carrera}
+                    value={this.state.editorial}
+                    onChange={this.handleChage}
                   />
                 </div>
 
                 <div className="form-group">
-                  <label>Código:</label>
+                  <label>Existencia: </label>
                   <input
                     type="text"
                     className="form-control"
-                    name="codigo"
-                    placeholder="Código del suscriptor"
+                    name="existencia"
+                    placeholder="Existencia del libro"
                     required
-                    onChange={this.handleChange}
-                    value={this.state.codigo}
+                    value={this.state.existencia}
+                    onChange={this.handleChage}
                   />
                 </div>
+
                 <input
                   type="submit"
-                  value="Agregar Suscriptor"
+                  value="Agregar Libro"
                   className="btn btn-success"
                 />
               </form>
@@ -122,8 +122,8 @@ class NuevoSuscriptor extends Component {
   }
 }
 
-NuevoSuscriptor.propTypes = {
+NuevoLibro.propTypes = {
   firestore: PropTypes.object.isRequired
 };
 
-export default firestoreConnect()(NuevoSuscriptor);
+export default firestoreConnect()(NuevoLibro);

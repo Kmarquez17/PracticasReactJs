@@ -6,50 +6,52 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import Spinner from "../Layout/Spinner";
 
-class EditarSuscriptor extends Component {
-  //crear Ref
-  nombreRef = React.createRef();
-  apellidoRef = React.createRef();
-  carreraRef = React.createRef();
-  codigoRef = React.createRef();
+class EditarLibro extends Component {
+  //Crear los ref para la edicion de los libros
+  tituloRef = React.createRef();
+  ISBNRef = React.createRef();
+  editorialRef = React.createRef();
+  existenciaRef = React.createRef();
 
   /**Funcion para editar un suscriptor */
   handleEditar = e => {
     e.preventDefault();
     // Crear el objeto que se va actualizar
 
-    const suscrpitorActualizado = {
-      nombre: this.nombreRef.current.value,
-      apellido: this.apellidoRef.current.value,
-      carrera: this.carreraRef.current.value,
-      codigo: this.codigoRef.current.value
+    const libroActualizado = {
+      titulo: this.tituloRef.current.value,
+      ISBN: this.ISBNRef.current.value,
+      editorial: this.editorialRef.current.value,
+      existencia: this.existenciaRef.current.value
     };
 
     // Estrare fire estore  y hitory
-    const { suscriptor, firestore, history } = this.props;
+    const { libro, firestore, history } = this.props;
 
     //Alamecenar en la base de datos con firestore
 
     firestore
       .update(
         {
-          collection: "suscriptores",
-          doc: suscriptor.id
+          collection: "libros",
+          doc: libro.id
         },
-        suscrpitorActualizado
+        libroActualizado
       )
       .then(() => {
-        history.push("/suscriptores");
+        history.push("/");
       });
   };
 
   render() {
-    const { suscriptor } = this.props;
-    if (!suscriptor) return <Spinner />;
+    //Obtener el libro
+    const { libro } = this.props;
+
+    if (!libro) return <Spinner />;
     return (
       <div className="row">
         <div className="col-12 mb-4">
-          <Link to={"/suscriptores"} className="btn btn-secondary ">
+          <Link to={"/libros"} className="btn btn-secondary ">
             <i className="fas fa-arrow-circle-left mr-1"></i>
             Volver al listado
           </Link>
@@ -57,65 +59,66 @@ class EditarSuscriptor extends Component {
         <div className="col-12">
           <h3>
             {/* <i className="fa fas-user-plus mr-1"></i> */}
-            Editar Suscriptor
+            Editar Libro
           </h3>
           <div className="row justify-content-center">
             <div className="col-md-8 mt-5">
               <form onSubmit={this.handleEditar}>
                 <div className="form-group">
-                  <label>Nombre:</label>
+                  <label>Titulo:</label>
                   <input
                     type="text"
                     className="form-control"
-                    name="nombre"
-                    placeholder="Nombre del suscriptor"
+                    name="titulo"
+                    placeholder="Titulo del libro"
                     required
-                    ref={this.nombreRef}
-                    defaultValue={suscriptor.nombre}
+                    defaultValue={libro.titulo}
+                    ref={this.tituloRef}
                   />
                 </div>
 
                 <div className="form-group">
-                  <label>Apellido:</label>
+                  <label>ISBN: </label>
                   <input
                     type="text"
                     className="form-control"
-                    name="apellido"
-                    placeholder="Apellido del suscriptor"
+                    name="ISBN"
+                    placeholder="ISBN del libro"
                     required
-                    ref={this.apellidoRef}
-                    defaultValue={suscriptor.apellido}
+                    defaultValue={libro.ISBN}
+                    ref={this.ISBNRef}
                   />
                 </div>
 
                 <div className="form-group">
-                  <label>Carrera:</label>
+                  <label>Editorial: </label>
                   <input
                     type="text"
                     className="form-control"
-                    name="carrera"
-                    placeholder="Carrera del suscriptor"
+                    name="editorial"
+                    placeholder="Editorial del libro"
                     required
-                    ref={this.carreraRef}
-                    defaultValue={suscriptor.carrera}
+                    defaultValue={libro.editorial}
+                    ref={this.editorialRef}
                   />
                 </div>
 
                 <div className="form-group">
-                  <label>Código:</label>
+                  <label>Existencia: </label>
                   <input
                     type="text"
                     className="form-control"
-                    name="codigo"
-                    placeholder="Código del suscriptor"
+                    name="existencia"
+                    placeholder="Existencia del libro"
                     required
-                    ref={this.codigoRef}
-                    defaultValue={suscriptor.codigo}
+                    defaultValue={libro.existencia}
+                    ref={this.existenciaRef}
                   />
                 </div>
+
                 <input
                   type="submit"
-                  value="Editar Suscriptor"
+                  value="Editar Libro"
                   className="btn btn-success"
                 />
               </form>
@@ -127,20 +130,19 @@ class EditarSuscriptor extends Component {
   }
 }
 
-
-EditarSuscriptor.propTypes = {
-    firestore: PropTypes.object.isRequired
-  };
+EditarLibro.propTypes = {
+  firestore: PropTypes.object.isRequired
+};
 
 export default compose(
   firestoreConnect(props => [
     {
-      collection: "suscriptores",
-      storeAs: "suscriptor",
+      collection: "libros",
+      storeAs: "libro",
       doc: props.match.params.id
     }
   ]),
   connect(({ firestore: { ordered } }, props) => ({
-    suscriptor: ordered.suscriptor && ordered.suscriptor[0]
+    libro: ordered.libro && ordered.libro[0]
   }))
-)(EditarSuscriptor);
+)(EditarLibro);

@@ -8,10 +8,18 @@ import store from "./store";
 //Componentes Vistas
 import Navbar from "./components/Layout/Navbar";
 
+/*Suscriptores */
 import Suscriptores from "./components/Suscriptores/Suscriptores";
 import NuevoSuscriptor from "./components/Suscriptores/NuevoSuscriptor";
 import EditarSuscriptor from "./components/Suscriptores/EditarSuscriptor";
 import MostrarSuscriptor from "./components/Suscriptores/MostrarSuscriptor";
+
+/*Libros */
+import Libros from "./components/Libros/Libros";
+import NuevoLibro from "./components/Libros/NuevoLibro";
+import EditarLibro from "./components/Libros/EditarLibro";
+import MostrarLibro from "./components/Libros/MostrarLibro";
+import PrestamoLibro from './components/Libros/PrestamoLibro'
 
 function App() {
   return (
@@ -21,6 +29,12 @@ function App() {
         <Navbar />
         <main className="container">
           <Switch>
+            <Route exact path="/" component={Libros} />
+            <Route exact path="/libros/nuevo" component={NuevoLibro} />
+            <Route exact path="/libros/mostrar/:id" component={MostrarLibro} />
+            <Route exact path="/libros/editar/:id" component={EditarLibro} />
+            <Route exact path="/libros/prestamo/:id" component={PrestamoLibro} />
+
             <Route exact path="/suscriptores" component={Suscriptores} />
             <Route
               exact

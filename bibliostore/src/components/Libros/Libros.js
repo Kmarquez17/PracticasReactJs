@@ -4,53 +4,55 @@ import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-//Componentes
 import Spinner from "../Layout/Spinner";
 
-const Suscriptores = ({ suscriptores, firestore }) => {
-  if (!suscriptores) return <Spinner />;
-  //   console.log(firestore)
+const Libros = ({ libros, firestore }) => {
+  if (!libros) return <Spinner />;
 
-  /**Eliminar suscriptores */
-  const handleEliminarSuscriptores = id => {
+  /**Funcion para eliminar libros */
+  const handleEliminarLibros = id => {
     firestore.delete({
-      collection: "suscriptores",
+      collection: "libros",
       doc: id
     });
-    // .then(() => {history.push('/suscriptores')})
   };
+
   return (
     <div className="row">
       <div className="col-12 mb-4">
-        <Link to={`/suscriptores/nuevo`} className="btn btn-primary">
+        <Link to="/libros/nuevo" className="btn btn-primary">
           <i className="fas fa-plus mr-1"></i>
-          Nuevo
+          Nuevo Libro
         </Link>
       </div>
       <div className="col-md-8">
-        <h2>
-          <i className="fas fa-users"></i>Suscriptores
-        </h2>
+        <h3>
+          <i className="fas fa-book mr-1"></i>
+          Libros
+        </h3>
       </div>
-
       <table className="table table-striped mt-4">
         <thead className="text-light bg-primary">
           <tr>
-            <th>Nombre</th>
-            <th>Carrera</th>
+            <th>Titulo</th>
+            <th>ISBN</th>
+            <th>Editorial</th>
+            <th>Existencia</th>
+            <th>Disponibles</th>
             <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
-          {suscriptores.map((suscriptor, index) => (
-            <tr key={suscriptor.id}>
-              <td>
-                {suscriptor.nombre} {suscriptor.apellido}
-              </td>
-              <td>{suscriptor.carrera}</td>
+          {libros.map(libro => (
+            <tr key={libro.id}>
+              <td>{libro.titulo}</td>
+              <td>{libro.ISBN}</td>
+              <td>{libro.editorial}</td>
+              <td>{libro.existencia}</td>
+              <td>{libro.existencia - libro.prestados.length}</td>
               <td>
                 <Link
-                  to={`/suscriptores/mostrar/${suscriptor.id}`}
+                  to={`/libros/mostrar/${libro.id}`}
                   className="btn btn-success mr-3"
                 >
                   <i className="fas fa-angle-double-right mr-1"></i>
@@ -59,7 +61,7 @@ const Suscriptores = ({ suscriptores, firestore }) => {
                 <button
                   className="btn btn-danger"
                   onClick={() => {
-                    handleEliminarSuscriptores(suscriptor.id);
+                    handleEliminarLibros(libro.id);
                   }}
                 >
                   <i className="fas fa-trash-alt mr-1"></i>
@@ -74,14 +76,14 @@ const Suscriptores = ({ suscriptores, firestore }) => {
   );
 };
 
-Suscriptores.propTypes = {
+Libros.propTypes = {
   firestore: PropTypes.object.isRequired,
-  suscriptores: PropTypes.array
+  libros: PropTypes.array
 };
 
 export default compose(
-  firestoreConnect([{ collection: "suscriptores" }]),
+  firestoreConnect([{ collection: "libros" }]),
   connect((state, props) => ({
-    suscriptores: state.firestore.ordered.suscriptores
+    libros: state.firestore.ordered.libros
   }))
-)(Suscriptores);
+)(Libros);
