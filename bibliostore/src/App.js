@@ -19,7 +19,12 @@ import Libros from "./components/Libros/Libros";
 import NuevoLibro from "./components/Libros/NuevoLibro";
 import EditarLibro from "./components/Libros/EditarLibro";
 import MostrarLibro from "./components/Libros/MostrarLibro";
-import PrestamoLibro from './components/Libros/PrestamoLibro'
+import PrestamoLibro from "./components/Libros/PrestamoLibro";
+
+/*Inicio de sesión */
+import Login from "./components/auth/Login";
+
+import { UserIsAuthenticated, UserIsNotAuthenticated } from "./helpers/auth";
 
 function App() {
   return (
@@ -29,29 +34,50 @@ function App() {
         <Navbar />
         <main className="container">
           <Switch>
-            <Route exact path="/" component={Libros} />
-            <Route exact path="/libros/nuevo" component={NuevoLibro} />
-            <Route exact path="/libros/mostrar/:id" component={MostrarLibro} />
-            <Route exact path="/libros/editar/:id" component={EditarLibro} />
-            <Route exact path="/libros/prestamo/:id" component={PrestamoLibro} />
+            <Route exact path="/" component={UserIsAuthenticated(Libros)} />
+            <Route
+              exact
+              path="/libros/nuevo"
+              component={UserIsAuthenticated(NuevoLibro)}
+            />
+            <Route
+              exact
+              path="/libros/mostrar/:id"
+              component={UserIsAuthenticated(MostrarLibro)}
+            />
+            <Route
+              exact
+              path="/libros/editar/:id"
+              component={UserIsAuthenticated(EditarLibro)}
+            />
+            <Route
+              exact
+              path="/libros/prestamo/:id"
+              component={UserIsAuthenticated(PrestamoLibro)}
+            />
 
-            <Route exact path="/suscriptores" component={Suscriptores} />
+            <Route
+              exact
+              path="/suscriptores"
+              component={UserIsAuthenticated(Suscriptores)}
+            />
             <Route
               exact
               path="/suscriptores/mostrar/:id"
-              component={MostrarSuscriptor}
+              component={UserIsAuthenticated(MostrarSuscriptor)}
             />
             <Route
               exact
               path="/suscriptores/nuevo"
-              component={NuevoSuscriptor}
+              component={UserIsAuthenticated(NuevoSuscriptor)}
             />
             <Route
               exact
               path="/suscriptores/editar/:id"
-              component={EditarSuscriptor}
+              component={UserIsAuthenticated(EditarSuscriptor)}
             />
 
+            <Route exact path="/login" component={UserIsNotAuthenticated(Login)} />
             <Route
               component={() => {
                 return <h1>Página no encontrada...!</h1>;

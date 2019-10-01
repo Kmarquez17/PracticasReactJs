@@ -1,0 +1,1 @@
+export const BUSCAR_USUARIO = "BUSCA_USUARIO";

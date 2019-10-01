@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 //Componentes
 import Spinner from "../Layout/Spinner";
 const MostrarLibro = ({ libro, firestore }) => {
+  
   const handleDevolverLibro = codigo => {
     //Copia del libro
     const libroActualizado = { ...libro };
