@@ -21,7 +21,7 @@ const NuevaCuenta = () => {
     });
   };
 
-  //Cuando el usuario quiere iniciar sesion
+  //Cuando el usuario quiere iniciar Sesión
   const onSubmit = (e) => {
     e.preventDefault();
 
@@ -92,7 +92,7 @@ const NuevaCuenta = () => {
           </div>
         </form>
         <Link to="/" className="enlace-cuenta">
-          Iniciar Sesion
+          Iniciar Sesión
         </Link>
       </div>
     </div>

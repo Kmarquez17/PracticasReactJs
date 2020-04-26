@@ -16,7 +16,7 @@ const Login = () => {
     });
   };
 
-  //Cuando el usuario quiere iniciar sesion
+  //Cuando el usuario quiere iniciar Sesión
   const onSubmit = (e) => {
     e.preventDefault();
 
@@ -27,7 +27,7 @@ const Login = () => {
   return (
     <div className="form-usuario">
       <div className="contenedor-form sombra-dark">
-        <h1>Inicio de Sesion</h1>
+        <h1>Inicio de Sesión</h1>
 
         <form onSubmit={onSubmit}>
           <div className="campo-form">
@@ -57,7 +57,7 @@ const Login = () => {
             <input
               type="submit"
               className="btn btn-primario btn-block"
-              value="Iniciar Sesion"
+              value="Iniciar Sesión"
             />
           </div>
         </form>
