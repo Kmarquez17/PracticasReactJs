@@ -1,8 +1,15 @@
 import React, { useContext, Fragment } from "react";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 import proyectoContext from "../../context/proyectos/proyectoContext";
+import tareaContext from "../../context/tareas/tareaContext";
 const ListadoTareas = () => {
+  //Obtener el state de Proyectos
   const proyectosContext = useContext(proyectoContext);
   const { proyecto, eliminarProyecto } = proyectosContext;
+
+  //Obtener el state de tareas
+  const tareasContext = useContext(tareaContext);
+  const { tareasProyecto, eliminarTarea, obtenerTareas } = tareasContext;
 
   //Si no hay proyecto selecccionado
   if (!proyecto) return <h2>Selecciona un proyecto</h2>;
@@ -11,20 +18,23 @@ const ListadoTareas = () => {
   const [proyectoActual] = proyecto;
   //console.log(proyectoActual);
 
-  const tareasProyecto = [
-    { nombre: "Elegir Plataforma", estado: false },
-    { nombre: "Elegir Colores", estado: true },
-    { nombre: "Elegir Plataforma de pago", estado: true },
-    { nombre: "Elegir Hostig", estado: false },
-  ];
   return (
     <Fragment>
       <h2>Proyecto: {proyectoActual.nombre}</h2>
       <ul className="listado-tareas">
         {tareasProyecto.length > 0 ? (
-          tareasProyecto.map((tarea, index) => (
-            <Tareas tarea={tarea} key={index} />
-          ))
+          <TransitionGroup>
+            {tareasProyecto.map((tarea, index) => (
+              <CSSTransition key={index} timeout={200} classNames="tarea">
+                <Tareas
+                  tarea={tarea}
+                  obtenerTareas={obtenerTareas}
+                  eliminarTarea={eliminarTarea}
+                  proyectoActual={proyectoActual}
+                />
+              </CSSTransition>
+            ))}
+          </TransitionGroup>
         ) : (
           <li className="tarea">No hay Tareas</li>
         )}
@@ -42,7 +52,7 @@ const ListadoTareas = () => {
   );
 };
 
-const Tareas = ({ tarea }) => {
+const Tareas = ({ tarea, eliminarTarea, obtenerTareas, proyectoActual }) => {
   return (
     <li className="tarea sombra">
       <p>{tarea.nombre}</p>
@@ -63,7 +73,14 @@ const Tareas = ({ tarea }) => {
         <button type="button" className="btn btn-primario">
           Editar
         </button>
-        <button type="button" className="btn btn-secundario">
+        <button
+          type="button"
+          className="btn btn-secundario"
+          onClick={() => {
+            eliminarTarea(tarea.id);
+            obtenerTareas(proyectoActual.id);
+          }}
+        >
           Eliminar
         </button>
       </div>

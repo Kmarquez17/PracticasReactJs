@@ -1,5 +1,7 @@
 import React, { useContext, useEffect } from "react";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 import proyectoContext from "../../context/proyectos/proyectoContext";
+import tareaContext from "../../context/tareas/tareaContext";
 const ListadoProyectos = () => {
   //Extraer proyecto del state inicial
   const proyectosContext = useContext(proyectoContext);
@@ -16,24 +18,39 @@ const ListadoProyectos = () => {
 
   return (
     <ul className="listado-proyectos">
-      {proyectos.map((proyecto, index) => (
-        <Proyecto proyecto={proyecto} key={index} />
-      ))}
+      <TransitionGroup>
+        {proyectos.map((proyecto, index) => (
+          <CSSTransition key={index} timeout={200} className={"proyecto"}>
+            <Proyecto proyecto={proyecto} />
+          </CSSTransition>
+        ))}
+      </TransitionGroup>
     </ul>
   );
 };
 export default ListadoProyectos;
 
 const Proyecto = ({ proyecto }) => {
+  //Obtener el state de proyectos
   const proyectosContext = useContext(proyectoContext);
   const { proyectoActual } = proyectosContext;
+
+  //Obtener el state de tareas
+  const tareasContext = useContext(tareaContext);
+  const { obtenerTareas } = tareasContext;
+
+  //Funcion para agregar el proyecto Actual
+  const SeleccionarProyecto = (id) => {
+    proyectoActual(id); // Fijar el proyecto Actual
+    obtenerTareas(id);
+  };
 
   return (
     <li>
       <button
         type="button"
         className="btn btn-blank"
-        onClick={() => proyectoActual(proyecto.id)}
+        onClick={() => SeleccionarProyecto(proyecto.id)}
       >
         {proyecto.nombre}
       </button>
