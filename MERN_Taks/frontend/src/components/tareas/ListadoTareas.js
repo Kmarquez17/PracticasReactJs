@@ -9,7 +9,13 @@ const ListadoTareas = () => {
 
   //Obtener el state de tareas
   const tareasContext = useContext(tareaContext);
-  const { tareasProyecto, eliminarTarea, obtenerTareas } = tareasContext;
+  const {
+    tareasProyecto,
+    eliminarTarea,
+    obtenerTareas,
+    cambiarEstado,
+    tareaActual,
+  } = tareasContext;
 
   //Si no hay proyecto selecccionado
   if (!proyecto) return <h2>Selecciona un proyecto</h2>;
@@ -24,13 +30,15 @@ const ListadoTareas = () => {
       <ul className="listado-tareas">
         {tareasProyecto.length > 0 ? (
           <TransitionGroup>
-            {tareasProyecto.map((tarea, index) => (
-              <CSSTransition key={index} timeout={200} classNames="tarea">
+            {tareasProyecto.map((tarea) => (
+              <CSSTransition key={tarea.id} timeout={200} classNames="tarea">
                 <Tareas
                   tarea={tarea}
                   obtenerTareas={obtenerTareas}
                   eliminarTarea={eliminarTarea}
                   proyectoActual={proyectoActual}
+                  cambiarEstado={cambiarEstado}
+                  tareaActual={tareaActual}
                 />
               </CSSTransition>
             ))}
@@ -52,25 +60,58 @@ const ListadoTareas = () => {
   );
 };
 
-const Tareas = ({ tarea, eliminarTarea, obtenerTareas, proyectoActual }) => {
+const Tareas = ({
+  tarea,
+  eliminarTarea,
+  obtenerTareas,
+  proyectoActual,
+  cambiarEstado,
+  tareaActual,
+}) => {
+  const cambioState = (tarea) => {
+    if (tarea.estado) {
+      tarea.estado = false;
+    } else {
+      tarea.estado = true;
+    }
+    cambiarEstado(tarea);
+  };
   return (
     <li className="tarea sombra">
       <p>{tarea.nombre}</p>
 
       <div className="estado">
         {tarea.estado ? (
-          <button type="button" className="completo">
+          <button
+            type="button"
+            className="completo"
+            onClick={() => {
+              cambioState(tarea);
+            }}
+          >
             Completo
           </button>
         ) : (
-          <button type="button" className="incompleto">
+          <button
+            type="button"
+            className="incompleto"
+            onClick={() => {
+              cambioState(tarea);
+            }}
+          >
             Incompleto
           </button>
         )}
       </div>
 
       <div className="acciones">
-        <button type="button" className="btn btn-primario">
+        <button
+          type="button"
+          className="btn btn-primario"
+          onClick={() => {
+            tareaActual(tarea);
+          }}
+        >
           Editar
         </button>
         <button

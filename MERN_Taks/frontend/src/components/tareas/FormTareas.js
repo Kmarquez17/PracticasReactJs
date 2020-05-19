@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import proyectoContext from "../../context/proyectos/proyectoContext";
 import tareaContext from "../../context/tareas/tareaContext";
@@ -7,17 +7,31 @@ const FormTareas = () => {
   const initialState = {
     nombre: "",
   };
-  const [tarea, setTarea] = useState(initialState);
+  const [tareaForm, setTareaForm] = useState(initialState);
   const proyectosContext = useContext(proyectoContext);
   const { proyecto } = proyectosContext;
 
   const tareasContext = useContext(tareaContext);
   const {
+    tarea,
     errorTarea,
     obtenerTareas,
     agregarTarea,
     validarTarea,
+    editarTarea,
+    limpiarTarea,
   } = tareasContext;
+
+  //useEffect me detecta una tarea seleccionada
+  useEffect(() => {
+    if (tarea !== null) {
+      setTareaForm(tarea);
+    } else {
+      setTareaForm({
+        nombre: "",
+      });
+    }
+  }, [tarea]);
 
   //Si un proyecto esta seleccionado
   if (!proyecto) return null;
@@ -28,8 +42,8 @@ const FormTareas = () => {
   //Leer valores del form
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setTarea({
-      ...tarea,
+    setTareaForm({
+      ...tareaForm,
       [name]: value,
     });
   };
@@ -38,21 +52,28 @@ const FormTareas = () => {
     e.preventDefault();
 
     //Validar
-    if (tarea.nombre.trim() === "") {
+    if (tareaForm.nombre.trim() === "") {
       validarTarea();
       return;
     }
-    //pasar la validacion
-    //agregar la tarea
-    tarea.proyectoId = proyectoActual.id;
-    tarea.estado = false;
+    //revisar si es edicion o nueva tarea
+    //Si es igual a null es nueva tarea
+    if (tarea === null) {
+      //agregar la tareaForm
+      tareaForm.proyectoId = proyectoActual.id;
+      tareaForm.estado = false;
 
-    agregarTarea(tarea);
+      agregarTarea(tareaForm);
+    } else {
+      //Si no es null es edicion
+      editarTarea(tareaForm);
+      limpiarTarea();
+    }
 
     //Volver a filtrar las tareas
     obtenerTareas(proyectoActual.id);
     //reiniciar el form
-    setTarea(initialState);
+    setTareaForm(initialState);
   };
 
   return (
@@ -64,7 +85,7 @@ const FormTareas = () => {
             className="input-text"
             placeholder="Nombre Tarea..."
             name="nombre"
-            value={tarea.nombre}
+            value={tareaForm.nombre}
             onChange={handleChange}
           />
         </div>
@@ -72,8 +93,8 @@ const FormTareas = () => {
         <div className="contenedor-inpu">
           <input
             type="submit"
-            className="btn btn-primario bnt-block"
-            value="Agregar Tarea"
+            className="btn btn-primario btn-submit btn-block"
+            value={tarea === null ? "Agregar Tarea" : "Editar Tarea"}
           />
         </div>
       </form>

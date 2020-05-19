@@ -14,9 +14,9 @@ import {
 
 const ProyectoState = (props) => {
   const proyectos = [
-    { id: 1, nombre: "Tienda Vitual" },
-    { id: 2, nombre: "Gastos NIC" },
-    { id: 3, nombre: "Games Store NIC" },
+    { id: "1", nombre: "Tienda Vitual" },
+    { id: "2", nombre: "Gastos NIC" },
+    { id: "3", nombre: "Games Store NIC" },
   ];
 
   const initialState = {
