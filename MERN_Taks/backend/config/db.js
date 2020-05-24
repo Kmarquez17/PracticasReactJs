@@ -8,6 +8,7 @@ const connectDataBase = async () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useFindAndModify: false,
+      useCreateIndex: true,
     });
     console.log("Conecto correctamente");
   } catch (error) {
