@@ -16,7 +16,7 @@ exports.crearUsuario = async (req, res) => {
 
     if (usuario) {
       console.log("Aqui");
-      return res.status(400).send({
+      return res.status(400).json({
         msg: "El usuario ya existe",
       });
     }
@@ -41,7 +41,7 @@ exports.crearUsuario = async (req, res) => {
       (error, token) => {
         if (error) throw error;
 
-        res.status(200).send({
+        res.status(200).json({
           token,
         });
       }
@@ -54,7 +54,7 @@ exports.crearUsuario = async (req, res) => {
     ///Guardar el nuevo usuario
     await usuario.save();
     //Mensaje de confirmacion
-    res.status(200).send({ msg: "Usuario creado correctamente" });
+    res.status(200).json({ msg: "Usuario creado correctamente" });
   } catch (error) {
     console.log(error);
     res.status(400).send("Hubo un error");
