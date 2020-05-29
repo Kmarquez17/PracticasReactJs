@@ -21,7 +21,7 @@ exports.autenticarUsuario = async (req, res) => {
 
     if (!usuario) {
       return res.status(400).send({
-        msg: "Usuario no existe...!",
+        msg: "El usuario no existe...!",
       });
     }
     //Revisar el password

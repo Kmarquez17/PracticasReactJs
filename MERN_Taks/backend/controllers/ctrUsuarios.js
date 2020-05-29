@@ -15,7 +15,6 @@ exports.crearUsuario = async (req, res) => {
     let usuario = await Usuarios.findOne({ email });
 
     if (usuario) {
-      console.log("Aqui");
       return res.status(400).json({
         msg: "El usuario ya existe",
       });
@@ -24,13 +23,18 @@ exports.crearUsuario = async (req, res) => {
     ///crear el nuevo usuario
     usuario = new Usuarios(req.body);
 
+    //Hash password
+    const salt = await bcryptjs.genSalt(10);
+    usuario.password = await bcryptjs.hash(password, salt);
+
     //Crear y firmar el JWt
     const payload = {
       usuario: {
         id: usuario.id,
       },
     };
-
+    ///Guardar el nuevo usuario
+    usuario.save();
     //Firmar JWT
     jwt.sign(
       payload,
@@ -46,15 +50,6 @@ exports.crearUsuario = async (req, res) => {
         });
       }
     );
-
-    //Hash password
-    const salt = await bcryptjs.genSalt(10);
-    usuario.password = await bcryptjs.hash(password, salt);
-
-    ///Guardar el nuevo usuario
-    await usuario.save();
-    //Mensaje de confirmacion
-    res.status(200).json({ msg: "Usuario creado correctamente" });
   } catch (error) {
     console.log(error);
     res.status(400).send("Hubo un error");
