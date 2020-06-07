@@ -15,7 +15,7 @@ const ListadoProyectos = () => {
 
   //Si proyecto tiene datos
   if (proyectos.length === 0)
-    return <p>No hay proyectos, comienza creano uno :(</p>;
+    return <p>No hay proyectos, comienza creando uno :(</p>;
 
   return (
     <ul className="listado-proyectos">
