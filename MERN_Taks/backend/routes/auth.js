@@ -2,6 +2,7 @@
 const express = require("express");
 const router = express.Router();
 const { check } = require("express-validator");
+const auth = require("../middleware/auth");
 const ctrAuth = require("../controllers/ctrAuth");
 
 //Crear un usuario
@@ -13,5 +14,7 @@ router.post("/", [
   }),
   ctrAuth.autenticarUsuario,
 ]);
+
+router.get("/", auth, ctrAuth.usuarioAutenticado);
 
 module.exports = router;

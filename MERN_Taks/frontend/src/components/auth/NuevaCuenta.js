@@ -1,11 +1,9 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import AlertaContext from "../../context/alertas/alertaContext";
+import AuthContext from "../../context/autenticacionAuth/authContext";
 
-const NuevaCuenta = () => {
-  //Extraer los valores del context
-  const alertaContext = useContext(AlertaContext);
-  const { alerta, mostrarAlerta } = alertaContext;
+const NuevaCuenta = (props) => {
   //State para iniciar secion
   const [usuario, setUsuario] = useState({
     nombre: "",
@@ -13,6 +11,25 @@ const NuevaCuenta = () => {
     password: "",
     confimar: "",
   });
+  //Extraer los valores del context
+  const alertaContext = useContext(AlertaContext);
+  const { alerta, mostrarAlerta } = alertaContext;
+
+  //Extraer auth funciones, estados
+  const authContext = useContext(AuthContext);
+  const { mensaje, autenticado, registrarUsuario } = authContext;
+
+  //En caso de que el usuario se haya registrado o registro duplicado
+  useEffect(() => {
+    if (autenticado) {
+      props.history.push("/proyectos");
+    }
+
+    if (mensaje) {
+      mostrarAlerta(mensaje.msg, mensaje.categoria);
+      return;
+    }
+  }, [mensaje, autenticado, props.history, mostrarAlerta]);
 
   //Extraer usuario
   const { nombre, email, password, confimar } = usuario;
@@ -56,6 +73,11 @@ const NuevaCuenta = () => {
     }
 
     //Pasarlo al actions
+    registrarUsuario({
+      nombre,
+      email,
+      password,
+    });
   };
   return (
     <div className="form-usuario">

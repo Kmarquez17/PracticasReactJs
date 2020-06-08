@@ -55,3 +55,14 @@ exports.autenticarUsuario = async (req, res) => {
     console.log(error);
   }
 };
+
+//Obtiene que usuario esta autenticado
+exports.usuarioAutenticado = async (req, res) => {
+  try {
+    //select indicamos que campo no queremos que nos retorne el query de mongo
+    const usuario = await Usuarios.findById(req.usuario.id).select("-password");
+    res.status(200).json({ usuario });
+  } catch (error) {
+    res.status(500).send({ msg: "Hubo un error" });
+  }
+};
