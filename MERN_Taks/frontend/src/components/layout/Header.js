@@ -7,6 +7,7 @@ const Header = () => {
   const { usuario, cerrarSesion, usuarioAutenticado } = authContext;
   useEffect(() => {
     usuarioAutenticado();
+    //eslint-disable-next-line
   }, []);
 
   return (
