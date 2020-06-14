@@ -29,7 +29,7 @@ const NuevaCuenta = (props) => {
       mostrarAlerta(mensaje.msg, mensaje.categoria);
       return;
     }
-  }, [mensaje, autenticado, props.history, mostrarAlerta]);
+  }, [mensaje, autenticado, props.history]);
 
   //Extraer usuario
   const { nombre, email, password, confimar } = usuario;
