@@ -37,7 +37,9 @@ const FormTareas = () => {
   if (!proyecto) return null;
 
   //Array destrucuting para extraer el proyecto actual
+  //console.log(proyecto);
   const [proyectoActual] = proyecto;
+  //console.log(proyectoActual);
 
   //Leer valores del form
   const handleChange = (e) => {
@@ -60,9 +62,7 @@ const FormTareas = () => {
     //Si es igual a null es nueva tarea
     if (tarea === null) {
       //agregar la tareaForm
-      tareaForm.proyectoId = proyectoActual.id;
-      tareaForm.estado = false;
-
+      tareaForm.proyecto = proyectoActual._id;
       agregarTarea(tareaForm);
     } else {
       //Si no es null es edicion
@@ -71,7 +71,7 @@ const FormTareas = () => {
     }
 
     //Volver a filtrar las tareas
-    obtenerTareas(proyectoActual.id);
+    obtenerTareas(proyectoActual._id);
     //reiniciar el form
     setTareaForm(initialState);
   };

@@ -49,12 +49,14 @@ exports.crearTareas = async (req, res) => {
 
 //Obtiene las tareas por proyectos
 exports.listadoTareas = async (req, res) => {
-  const { proyecto } = req.body;
+  const { proyecto } = req.query;
   try {
     if (!(await verficarProyectoUsuario(res, req, proyecto))) return;
 
     //Obtener las tareas por proyectos
-    const tareas = await Tareas.find({ proyecto: proyecto });
+    const tareas = await Tareas.find({ proyecto: proyecto }).sort({
+      creado: -1,
+    });
 
     res.status(200).json({ tareas });
   } catch (error) {

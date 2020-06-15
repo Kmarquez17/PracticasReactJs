@@ -22,7 +22,6 @@ const ListadoTareas = () => {
   //Array destrucuting para extraer el proyecto actual
 
   const [proyectoActual] = proyecto;
-  //console.log(proyectoActual);
 
   return (
     <Fragment>
@@ -31,7 +30,7 @@ const ListadoTareas = () => {
         {tareasProyecto.length > 0 ? (
           <TransitionGroup>
             {tareasProyecto.map((tarea) => (
-              <CSSTransition key={tarea.id} timeout={200} classNames="tarea">
+              <CSSTransition key={tarea._id} timeout={200} classNames="tarea">
                 <Tareas
                   tarea={tarea}
                   obtenerTareas={obtenerTareas}
@@ -119,7 +118,7 @@ const Tareas = ({
           className="btn btn-secundario"
           onClick={() => {
             eliminarTarea(tarea.id);
-            obtenerTareas(proyectoActual.id);
+            obtenerTareas(proyectoActual._id);
           }}
         >
           Eliminar

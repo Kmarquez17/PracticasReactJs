@@ -11,24 +11,25 @@ import {
 export default (state, action) => {
   switch (action.type) {
     case TAREAS_PROYECTO:
+      
       return {
         ...state,
-        tareasProyecto: state.tareas.filter(
-          (tarea) => tarea.proyectoId === action.payload
-        ),
+        tareasProyecto: action.payload,
       };
 
     case AGREGAR_TAREA:
       return {
         ...state,
-        tareas: [action.payload, ...state.tareas],
+        tareasProyecto: [action.payload, ...state.tareasProyecto],
         errorTarea: false,
       };
 
     case ELIMINAR_TAREA:
       return {
         ...state,
-        tareas: state.tareas.filter((tarea) => tarea.id !== action.payload),
+        tareasProyecto: state.tareasProyecto.filter(
+          (tarea) => tarea.id !== action.payload
+        ),
       };
 
     case VALIDAR_TAREA:
@@ -41,7 +42,7 @@ export default (state, action) => {
     case ACTUALIZAR_TAREA:
       return {
         ...state,
-        tareas: state.tareas.map((tarea) =>
+        tareasProyecto: state.tareasProyecto.map((tarea) =>
           tarea.id === action.payload.id ? action.payload : tarea
         ),
         //tarea: null,
