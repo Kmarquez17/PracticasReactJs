@@ -1,17 +1,24 @@
 import React, { useContext, useEffect } from "react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import proyectoContext from "../../context/proyectos/proyectoContext";
+import AlertaContext from "../../context/alertas/alertaContext";
 import tareaContext from "../../context/tareas/tareaContext";
 const ListadoProyectos = () => {
   //Extraer proyecto del state inicial
   const proyectosContext = useContext(proyectoContext);
-  const { proyectos, obtenerProyectos } = proyectosContext;
+  const { mensaje, proyectos, obtenerProyectos } = proyectosContext;
+
+  const alertaContext = useContext(AlertaContext);
+  const { alerta, mostrarAlerta } = alertaContext;
 
   //Obtener proyecto cuando carga el componente
   useEffect(() => {
+    if (mensaje) {
+      mostrarAlerta(mensaje.msg, mensaje.categoria);
+    }
     obtenerProyectos();
     //eslint-disable-next-line
-  }, []);
+  }, [mensaje]);
 
   //Si proyecto tiene datos
   if (proyectos.length === 0)
@@ -19,6 +26,9 @@ const ListadoProyectos = () => {
 
   return (
     <ul className="listado-proyectos">
+      {alerta ? (
+        <div className={`alerta ${alerta.categoria}`}>{alerta.msg}</div>
+      ) : null}
       <TransitionGroup>
         {proyectos.map((proyecto, index) => (
           <CSSTransition key={index} timeout={200} className={"proyecto"}>
@@ -51,7 +61,7 @@ const Proyecto = ({ proyecto }) => {
       <button
         type="button"
         className="btn btn-blank"
-        onClick={() => SeleccionarProyecto(proyecto.id)}
+        onClick={() => SeleccionarProyecto(proyecto._id)}
       >
         {proyecto.nombre}
       </button>

@@ -51,7 +51,7 @@ const ListadoTareas = () => {
         type="button"
         className="btn btn-eliminar"
         onClick={() => {
-          eliminarProyecto(proyectoActual.id);
+          eliminarProyecto(proyectoActual._id);
         }}
       >
         Eliminar Proyecto &times;
