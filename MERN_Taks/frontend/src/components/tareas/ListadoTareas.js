@@ -13,7 +13,7 @@ const ListadoTareas = () => {
     tareasProyecto,
     eliminarTarea,
     obtenerTareas,
-    cambiarEstado,
+    editarTarea,
     tareaActual,
   } = tareasContext;
 
@@ -36,7 +36,7 @@ const ListadoTareas = () => {
                   obtenerTareas={obtenerTareas}
                   eliminarTarea={eliminarTarea}
                   proyectoActual={proyectoActual}
-                  cambiarEstado={cambiarEstado}
+                  editarTarea={editarTarea}
                   tareaActual={tareaActual}
                 />
               </CSSTransition>
@@ -63,17 +63,18 @@ const Tareas = ({
   tarea,
   eliminarTarea,
   obtenerTareas,
+  editarTarea,
   proyectoActual,
-  cambiarEstado,
   tareaActual,
 }) => {
   const cambioState = (tarea) => {
+    debugger
     if (tarea.estado) {
       tarea.estado = false;
     } else {
       tarea.estado = true;
     }
-    cambiarEstado(tarea);
+    editarTarea(tarea);
   };
   return (
     <li className="tarea sombra">
@@ -117,7 +118,7 @@ const Tareas = ({
           type="button"
           className="btn btn-secundario"
           onClick={() => {
-            eliminarTarea(tarea.id);
+            eliminarTarea(tarea._id, proyectoActual._id);
             obtenerTareas(proyectoActual._id);
           }}
         >

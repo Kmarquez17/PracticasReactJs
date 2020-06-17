@@ -74,10 +74,11 @@ exports.actualizarTarea = async (req, res) => {
     let nuevaTarea = {};
 
     //Si manda el nombre
-    if (nombre) nuevaTarea.nombre = nombre;
+    nuevaTarea.nombre = nombre;
 
     //Si manda el estado
-    if (estado) nuevaTarea.estado = estado;
+    nuevaTarea.estado = estado;
+   // console.log(nuevaTarea);
 
     //Consultamos si existe tarea
     let tarea = await Tareas.findById(id);
@@ -101,7 +102,7 @@ exports.actualizarTarea = async (req, res) => {
 };
 exports.eliminarTarea = async (req, res) => {
   const { id } = req.params;
-  const { proyecto } = req.body;
+  const { proyecto } = req.query;
   try {
     if (!(await verficarProyectoUsuario(res, req, proyecto))) return;
     //Consultamos si existe tarea
