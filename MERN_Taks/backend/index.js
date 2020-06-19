@@ -5,7 +5,7 @@ const connectDataBase = require("./config/db");
 //Crear el servidor
 const app = express();
 //Puerto de la app
-const PORT = process.env.PORT || 4000;
+const port = process.env.port || 4000;
 
 //Conectar al base datos
 connectDataBase();
@@ -41,6 +41,6 @@ app.get("/", (req, res) => {
 });
 //Arrancar el servidor
 
-app.listen(PORT, () => {
-  console.log(`El servidor esta funcionando en el puerto ${PORT}`);
+app.listen(port, "0.0.0.0", () => {
+  console.log(`El servidor esta funcionando en el puerto ${port}`);
 });
