@@ -4,7 +4,28 @@ import { css } from "@emotion/core";
 import Layout from "../components/Layout/Layout";
 import { Formulario, Campo, InputSubmit } from "../components/ui/Formulario";
 
+//Validaciones
+import useValidacion from "../hooks/useValidacion";
+import validarCrearCuenta from "../validacion/validarCrearCuenta";
+
+const stateInitial = {
+  nombre: "",
+  email: "",
+  password: "",
+};
+
 const CrearCuenta = () => {
+  const {
+    valores,
+    errores,
+    submitForm,
+    handleChage,
+    handleSubmit,
+  } = useValidacion(stateInitial, validarCrearCuenta, crearCuenta());
+
+  const crearCuenta = () => {
+    console.log("creando Cuenta");
+  };
   return (
     <div>
       <Layout>
