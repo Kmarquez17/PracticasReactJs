@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const useValidacion = (stateInicial, validar, fn) => {
   const [valores, setValores] = useState(stateInicial);
@@ -13,7 +13,7 @@ const useValidacion = (stateInicial, validar, fn) => {
       }
       setSubmitForm(false);
     }
-  }, []);
+  }, [errores]);
 
   //Funcion que se ejecuta conforme el usuario  escriba algo
 
@@ -26,19 +26,25 @@ const useValidacion = (stateInicial, validar, fn) => {
 
   //Funcion que se ejecuta cuando el usuario hace submit
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const erroresValidacion = validar(valores);
     setErrores(erroresValidacion);
     setSubmitForm(true);
   };
 
+  //Cuando se realiza el evento de blur
+  const handleBlur = () => {
+    const erroresValidacion = validar(valores);
+    setErrores(erroresValidacion);
+  };
+
   return {
     valores,
     errores,
-    submitForm,
     handleChage,
-    handleSubmit
+    handleSubmit,
+    handleBlur,
   };
 };
 

@@ -2,7 +2,12 @@ import React from "react";
 import { css } from "@emotion/core";
 
 import Layout from "../components/Layout/Layout";
-import { Formulario, Campo, InputSubmit } from "../components/ui/Formulario";
+import {
+  Formulario,
+  Campo,
+  InputSubmit,
+  Error,
+} from "../components/ui/Formulario";
 
 //Validaciones
 import useValidacion from "../hooks/useValidacion";
@@ -15,17 +20,20 @@ const stateInitial = {
 };
 
 const CrearCuenta = () => {
+  const crearCuentaFn = () => {
+    console.log("creando Cuenta 123");
+  };
+
   const {
     valores,
     errores,
-    submitForm,
     handleChage,
     handleSubmit,
-  } = useValidacion(stateInitial, validarCrearCuenta, crearCuenta());
+    handleBlur,
+  } = useValidacion(stateInitial, validarCrearCuenta, crearCuentaFn);
 
-  const crearCuenta = () => {
-    console.log("creando Cuenta");
-  };
+  const { nombre, email, password } = valores;
+
   return (
     <div>
       <Layout>
@@ -38,7 +46,8 @@ const CrearCuenta = () => {
           >
             Crear Cuenta
           </h1>
-          <Formulario>
+          <Formulario onSubmit={handleSubmit} noValidate>
+            {errores.nombre && <Error>{errores.nombre}</Error>}
             <Campo>
               <label htmlFor="nombre">Nombre:</label>
               <input
@@ -46,8 +55,12 @@ const CrearCuenta = () => {
                 name="nombre"
                 id="nombre"
                 placeholder="Tu nombre"
+                value={nombre}
+                onChange={handleChage}
+                onBlur={handleBlur}
               />
             </Campo>
+            {errores.email && <Error>{errores.email}</Error>}
             <Campo>
               <label htmlFor="email">Email:</label>
               <input
@@ -55,15 +68,22 @@ const CrearCuenta = () => {
                 name="email"
                 id="email"
                 placeholder="Tu email"
+                value={email}
+                onChange={handleChage}
+                onBlur={handleBlur}
               />
             </Campo>
+            {errores.password && <Error>{errores.password}</Error>}
             <Campo>
               <label htmlFor="nombre">Password:</label>
               <input
-                type="text"
+                type="password"
                 name="password"
                 id="password"
                 placeholder="Tu password"
+                value={password}
+                onChange={handleChage}
+                onBlur={handleBlur}
               />
             </Campo>
 
