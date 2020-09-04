@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import Link from "next/link";
+import Router from "next/router";
 import styled from "@emotion/styled";
 import { css } from "@emotion/core";
 
@@ -26,8 +27,10 @@ const Logo = styled.p`
   margin-right: 2rem;
 `;
 
+import { FirebaseContext } from "../../firebase";
+
 const Header = () => {
-  const usuario = false;
+  const { usuario, firebase } = useContext(FirebaseContext);
   return (
     <header
       css={css`
@@ -61,9 +64,17 @@ const Header = () => {
                   margin-right: 2rem;
                 `}
               >
-                HOla: Kevin
+                Hola: {usuario.displayName}
               </p>
-              <Boton bgColor={true}>Cerrar Sesión</Boton>
+              <Boton
+                bgColor={true}
+                onClick={() => {
+                  firebase.CerrarSesion();
+                  Router.push('/')
+                }}
+              >
+                Cerrar Sesión
+              </Boton>
             </>
           ) : (
             <>
