@@ -4,6 +4,13 @@ export const Formulario = styled.form`
   max-width: 600px;
   width: 95%;
   margin: 5rem auto 0 auto;
+
+  fieldset {
+    margin: 2rem 0;
+    border: 1px solid #e1e1e1;
+    padding: 2rem;
+    font-size: 2rem;
+  }
 `;
 
 export const Campo = styled.div`
@@ -16,9 +23,14 @@ export const Campo = styled.div`
     font-size: 1.8rem;
   }
 
-  input {
+  input,
+  textarea {
     flex: 1;
     padding: 1rem;
+  }
+
+  textarea {
+    height: 350px;
   }
 `;
 
@@ -45,7 +57,7 @@ export const Error = styled.p`
   font-family: "PT sans", sans-serif;
   font-weight: 700;
   font-size: 1.4rem;
-  color: #FFF;
+  color: #fff;
   text-align: center;
   text-transform: uppercase;
   margin: 2rem 0;
